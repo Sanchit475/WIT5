@@ -5,130 +5,82 @@
 
     <style>
         body {
-            margin: 0;
             font-family: Arial;
-            background: linear-gradient(135deg, #1e293b, #334155);
-            color: white;
             text-align: center;
+            background-color: #eef2ff;
+            padding: 30px;
         }
 
         h1 {
-            margin-top: 30px;
-            color: #fbbf24;
+            color: #4338ca;
         }
 
-        .gallery {
-            width: 600px;
-            margin: 30px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px #111;
-        }
-
-        #mainImage {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
+        .box {
+            background-color: white;
+            width: 500px;
+            margin: auto;
+            padding: 25px;
             border-radius: 15px;
-        }
-
-        #caption {
-            color: #1e293b;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 15px;
+            box-shadow: 0 5px 20px #aaa;
         }
 
         button {
-            background-color: #f59e0b;
+            background-color: #f97316;
             color: white;
             border: none;
-            padding: 10px 25px;
-            margin: 5px;
+            padding: 10px 20px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 16px;
         }
 
         button:hover {
-            background-color: #d97706;
+            background-color: #ea580c;
         }
 
-        #count {
-            color: #64748b;
+        .gallery img {
+            width: 180px;
+            height: 140px;
+            object-fit: cover;
             margin: 10px;
+            border-radius: 10px;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>📸 My Image Gallery</h1>
+    <div class="box">
 
-    <div class="gallery">
+        <h1>📸 Dynamic Image Gallery</h1>
 
-        <img id="mainImage"
-        src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80">
+        <input type="file" id="imageInput" accept="image/*">
 
-        <div id="caption">Beautiful Nature</div>
+        <br><br>
 
-        <div id="count">1 / 4</div>
+        <button onclick="addImage()">Add Image</button>
 
-        <button onclick="previousImage()">⬅ Previous</button>
-        <button onclick="nextImage()">Next ➡</button>
+        <div class="gallery" id="gallery"></div>
 
     </div>
 
     <script>
 
-        var images = [
-            "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80"
-        ];
+        function addImage() {
 
-        var captions = [
-            "Beautiful Nature",
-            "Peaceful Mountains",
-            "Amazing Landscape",
-            "Green Forest"
-        ];
+            let input = document.getElementById("imageInput");
 
-        var current = 0;
-
-        function showImage() {
-
-            document.getElementById("mainImage").src = images[current];
-
-            document.getElementById("caption").innerHTML =
-                captions[current];
-
-            document.getElementById("count").innerHTML =
-                (current + 1) + " / " + images.length;
-        }
-
-        function nextImage() {
-
-            current++;
-
-            if (current == images.length) {
-                current = 0;
+            if (input.files.length == 0) {
+                alert("Please select an image first!");
+                return;
             }
 
-            showImage();
-        }
+            let image = document.createElement("img");
 
-        function previousImage() {
+            image.src = URL.createObjectURL(input.files[0]);
 
-            current--;
+            document.getElementById("gallery").appendChild(image);
 
-            if (current < 0) {
-                current = images.length - 1;
-            }
-
-            showImage();
+            input.value = "";
         }
 
     </script>
